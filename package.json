@@ -1,0 +1,15 @@
+{
+  "name": "phantasma-node-examples",
+  "version": "1.0.0",
+  "description": "This is just example for the Phantasma Blockchain",
+  "main": "index.js",
+  "scripts": {
+    "run": "bun examples.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joao \"Tek\" Novo",
+  "license": "ISC",
+  "dependencies": {
+    "phantasma-ts": "^0.1.55"
+  }
+}
