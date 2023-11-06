@@ -7,6 +7,7 @@ const {
   PhantasmaKeys,
   Transaction,
   Address,
+  getTokenEventData,
   getPrivateKeyFromWif,
   getWifFromPrivateKey,
 } = require("phantasma-ts");
@@ -17,7 +18,7 @@ const NETWORK_PEER_URL = undefined;
 const NEXUS_NAME = "testnet";
 const RPC = new PhantasmaAPI(NETWORK_API_URL, NETWORK_PEER_URL, NEXUS_NAME);
 
-const GAS_LIMIT = 210000;
+const GAS_LIMIT = 2100000;
 const GAS_PRICE = 100000;
 
 function delay(time) {
@@ -35,6 +36,10 @@ function DecodeInformation(data) {
 async function GetUserBalance(address) {
   let account = await RPC.getAccount(address);
   return account.balances;
+}
+
+async function DecodeTransactionTransferEventData(data) {
+  return getTokenEventData(data);
 }
 
 async function SendATransaction(transaction) {

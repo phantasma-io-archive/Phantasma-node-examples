@@ -1,4 +1,4 @@
-import { PhantasmaAPI, Base16, VMObject, PBinaryReader, ScriptBuilder, PhantasmaKeys, Transaction, Address, getPrivateKeyFromWif, getWifFromPrivateKey, Balance} from "phantasma-ts";
+import { PhantasmaAPI, Base16, VMObject, PBinaryReader, ScriptBuilder, PhantasmaKeys, Transaction, Address, getPrivateKeyFromWif, getWifFromPrivateKey, Balance, getTokenEventData} from "phantasma-ts";
 
 /**
  * Setup the connection to the API using the testnet
@@ -97,6 +97,16 @@ async function GetUserBalance(address) : Promise<Balance[]> {
   let account = await RPC.getAccount(address);
   return account.balances;
 }
+
+/**
+ * This will return the token transfer event data
+ * @param data Should be from a TokenSent or TokenReceived event
+ * @returns {tokenSymbol, amount, chainName}
+ */
+async function DecodeTransactionTransferEventData(data: string) {
+  return getTokenEventData(data);
+}
+
 /**
  * Send a transaction
  * @param transaction Transaction to send already signed

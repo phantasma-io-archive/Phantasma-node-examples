@@ -8,6 +8,7 @@ This repository contains a collection of examples demonstrating how to integrate
 - [Setup](#setup)
 - [Examples](#examples)
   - [Get User Balances](#get-user-balances)
+  - [Decode a Transaction Event Data](#decode-a-transaction-event-data)
   - [Make a Transaction](#make-a-transaction)
   - [Sign a Transaction](#sign-a-transaction)
   - [Send a Transaction](#send-a-transaction)
@@ -46,6 +47,15 @@ This example demonstrates how to retrieve the balance of a specific account on t
 ```js
 // Usage
 GetUserBalance("your-phantasma-address-here");
+```
+
+### Decode a Transaction Event Data
+
+Shows how to decode a transaction event data for a **TokenSend** and a **TokenReceive** event.
+
+```js
+// Usage
+DecodeTransactionTransferEventData("data field from the event");
 ```
 
 ### Make a Transaction
