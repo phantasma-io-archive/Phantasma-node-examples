@@ -38,6 +38,47 @@ function DecodeInformation(data) {
   return vm;
 }
 
+/**
+ * On Transaction Received
+ * @param address User that received
+ * @param symbol Symbol received
+ * @param amount Amount of the symbol received
+ */
+function onTransactionReceived(address, symbol, amount) {}
+
+// Function that periodically checks the height of the chain and fetches the latest block if the height has increased
+async function CheckForNewBlocks() {
+  // Get the current height of the chain
+  let newHeight = await RPC.getBlockHeight(CHAIN_NAME);
+  let currentHeight = newHeight;
+
+  // Check if the height has increased
+  if (newHeight > currentHeight) {
+    // Fetch the latest block
+    let latestBlock = await RPC.getBlockByHeight(CHAIN_NAME, newHeight);
+
+    // Check all transactions in this block
+    for (let i = 0; i < latestBlock.txs.length; i++) {
+      let tx = latestBlock.txs[i];
+
+      // Check all events in this transaction
+      for (let j = 0; j < tx.events.length; j++) {
+        let evt = tx.events[j];
+        if (evt.kind == "TokenReceive") {
+          var data = getTokenEventData(evt.data);
+          onTransactionReceived(evt.address, data.symbol, data.value);
+        }
+      }
+    }
+
+    // Update the current height of the chain
+    currentHeight = newHeight;
+  }
+
+  // Repeat this process after a delay
+  setTimeout(CheckForNewBlocks, 1000);
+}
+
 /*async function TransferTokens() {
   let wif = "";
   let keys = PhantasmaKeys.fromWIF(wif);
@@ -180,6 +221,17 @@ async function GetATransaction(txHash) {
 }
 
 /**
+ * 
+ * @param height height of the block you want to get
+ * @returns 
+ */
+async function GetBlockHeight(height) {
+  let result = await RPC.getBlockByHeight(CHAIN_NAME, height);
+  console.log({ result });
+  return result;
+}
+
+/**
  * Returns the WIF of a private key
  * @param privKey Private Key of the wallet
  * @returns 
@@ -234,4 +286,7 @@ function GenerateAWalletFromWIF(wif){
 }
 
 console.log("Hello");
+
+let decodeStr = "044B43414C07005039278C0400046D61696E";
+console.log(await DecodeTransactionTransferEventData(decodeStr));
 //TransferTokens();

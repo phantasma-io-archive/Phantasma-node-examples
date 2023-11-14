@@ -121,6 +121,24 @@ Creates a wallet using a given private key.
 GenerateAWalletFromPrivateKey("your-private-key-here");
 ```
 
+### Get Block by Height
+
+This example demonstrates how to retrieve the Block by the height on the Phantasma Blockchain.
+
+```js
+// Usage
+GetBlockHeight(10);
+```
+
+### Check for new Blocks
+
+This function continuously monitors the blockchain for new blocks. When it detects that the height of the chain has increased, it fetches the latest block and processes each transaction within it, specifically looking for "TokenReceive" events. When such an event is found, it triggers a predefined action.
+
+```js
+// Usage
+CheckForNewBlocks();
+```
+
 ## Contributing
 
 Contributions to the `phantasma-node-examples` repository are welcome. To contribute, please follow the instructions in [CONTRIBUTING.md](CONTRIBUTING.md).
